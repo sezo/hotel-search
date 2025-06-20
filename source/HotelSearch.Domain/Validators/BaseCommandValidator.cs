@@ -26,9 +26,9 @@ public class BaseCommandValidator<T>: AbstractValidator<BaseCommand<T>>
         if (typeof(T) == typeof(Guid))
         {
             RuleFor(x => x.Id)
-                .Must(x => Guid.TryParse(x.ToString(), out _))
+                .Must(x => Guid.TryParse(x.ToString(), out _) && x.ToString() != Guid.Empty.ToString())
                 .When(x => x.Id is not null)
-                .WithMessage("Id must be a valid GUID.");
+                .WithMessage("Id must be a valid and non empty Guid.");
         }
     }
 }

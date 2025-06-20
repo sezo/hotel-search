@@ -4,6 +4,13 @@ namespace HotelSearch.Domain.Repositories;
 
 public interface IHotelRepository
 {
+    
+    /// <summary>
+    /// Deletes hotel from repository.
+    /// </summary>
+    /// <param name="hotelId"></param>
+    void Delete(Guid hotelId);
+    
     /// <summary>
     /// Gets hotel entity by it's id.
     /// </summary>
