@@ -59,7 +59,7 @@ public class Program
             
             // comment return line to seed some hotels
 
-          //  return;
+            return;
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
             var hotelService = services.GetRequiredService<IHotelService>();
