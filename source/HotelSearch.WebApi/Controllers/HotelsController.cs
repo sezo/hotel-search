@@ -67,10 +67,10 @@ public class HotelsController : Controller
     [HttpGet("search")]
     [AllowAnonymous]
     [SwaggerOperation(Summary = "Search hotels near given location orderd by price and distance")]
-    [ProducesResponseType(typeof(List<HotelView>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(HotelSearchView), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     [ProducesResponseType((int)HttpStatusCode.ServiceUnavailable)]
-    public ActionResult<List<HotelView>> Search([FromQuery] HotelSearchQuery query)
+    public ActionResult<HotelSearchView> Search([FromQuery] HotelSearchQuery query)
     {
         return _hotelService.Search(query);
     }

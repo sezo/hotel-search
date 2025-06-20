@@ -35,7 +35,7 @@ public interface IHotelService
    /// </summary>
    /// <param name="query"></param>
    /// <returns></returns>
-   List<HotelView> Search(HotelSearchQuery query);
+   HotelSearchView Search(HotelSearchQuery query);
    
    /// <summary>
    /// Creates or updates hotel entity based on command data.

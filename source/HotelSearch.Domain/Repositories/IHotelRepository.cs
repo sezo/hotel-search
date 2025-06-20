@@ -22,7 +22,7 @@ public interface IHotelRepository
     
     List<HotelView> GetAll(int page = 0, int pageSize = 10);
     
-    List<HotelView> Search(HotelSearchQuery query);
+    HotelSearchView Search(HotelSearchQuery query);
     
     void Upsert(Hotel hotel);
 }

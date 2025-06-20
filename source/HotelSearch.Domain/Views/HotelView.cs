@@ -1,8 +1,8 @@
 namespace HotelSearch.Domain.Views;
 
-public class HotelView
+public record HotelView
 {
-    public string Name { get; set; }
-    public double? Distance { get; set; }
-    public decimal Price { get; set; }
+    public string Name { get; init; }
+    public double? Distance { get; init; }
+    public decimal Price { get; init; }
 }

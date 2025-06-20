@@ -41,13 +41,14 @@ public class HotelRepository: IHotelRepository
             .ToList();
     }
 
-    public List<HotelView> Search(HotelSearchQuery query)
+    public HotelSearchView Search(HotelSearchQuery query)
     {
         var page = query.Page.GetValueOrDefault() < 1 ? 0 : query.Page.Value - 1;
         var pageSize = query.PageSize.GetValueOrDefault();
         pageSize = pageSize < 1 || pageSize > 100 ? 10 : pageSize;
         
-        return _hotels
+        var total = _hotels.Count;
+        var hotels =  _hotels
             .Values
             .OrderBy(x => x.Price.PerNight)
             .ThenBy(x => x.Location.Distance(new Point(query.Longitude, query.Latitude)))
@@ -60,6 +61,8 @@ public class HotelRepository: IHotelRepository
                 Price = x.Price.PerNight
             })
             .ToList();
+        
+        return new HotelSearchView(hotels, total);
     }
 
     public void Upsert(Hotel hotel)

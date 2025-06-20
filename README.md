@@ -4,6 +4,8 @@ Hotel search is a simple application that support CRUD operation on hotel entity
 
 Additionally, it support search of hotels by price and by location.
 
+All units follows International System of Units (SI) if not stated otherwise.
+
 Solution is devided in:
 
 ## Domain

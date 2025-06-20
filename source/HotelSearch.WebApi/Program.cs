@@ -9,6 +9,7 @@ using HotelSearch.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 namespace HotelSearch.WebApi;
 
@@ -18,17 +19,19 @@ public class Program
     public static void Main(string[] args)
     {
         builder = WebApplication.CreateBuilder(args);
+        
+        builder.Host.UseSerilog((context, configuration) =>
+        {
+            configuration
+                .ReadFrom.Configuration(context.Configuration)
+                .WriteTo.Console();
+        });
 
-        // Add services to the container.
 
         builder.Services.AddControllers();
+        
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
-
-       
-
-
-
         
         ConfigureServices(builder.Services);
         var app = builder.Build();
@@ -49,7 +52,6 @@ public class Program
 
         app.UseAuthorization();
 
-
         app.MapControllers();
         
         app.Lifetime.ApplicationStarted.Register(async () =>
@@ -57,7 +59,7 @@ public class Program
             
             // comment return line to seed some hotels
 
-            return;
+          //  return;
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
             var hotelService = services.GetRequiredService<IHotelService>();

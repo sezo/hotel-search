@@ -48,7 +48,6 @@ public class HotelService: IHotelService
             _logger.LogError(ex, "Hotel deletion with id {Id} fails", command.Id);
             throw new HotelDeletionFailException(command.Id);
         }
-
     }
 
     public HotelView Get(Guid id)
@@ -66,7 +65,7 @@ public class HotelService: IHotelService
         return _hotelRepository.GetAll(page, pageSize);
     }
 
-    public List<HotelView> Search(HotelSearchQuery query)
+    public HotelSearchView Search(HotelSearchQuery query)
     {
         if (query is null)
         {
@@ -76,12 +75,11 @@ public class HotelService: IHotelService
 
         try
         {
-            var result = _hotelRepository.Search(query);
-            return result;
+            return _hotelRepository.Search(query);
         }
         catch (Exception ex)
         {
-           _logger.LogError(ex, "Search query exception");
+           _logger.LogError(ex, "Hotel search fails for query {Query}", query);
             throw;
         }
     }
