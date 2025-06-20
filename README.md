@@ -24,3 +24,13 @@ For testing purpose, hotels can be seed in Program.cs file in ApplicationStarted
 ## Test
 Uniti test for Domain and Application layer.
 Integration test are planned :)
+
+
+## Tech stack
+
+- Framework: .NET Core 9
+- Language: C#
+- Validations: FluentValidations 
+- Testing framework: Nunit + Moq + FluentAssertions
+- Data persistence storage: in-memory
+
