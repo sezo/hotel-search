@@ -17,6 +17,8 @@ Entry point to application. Api's are exposed on Hotels url.
 For all CRUD actions user needs to be authenticated.
 Search method is allowed for anonymus user.
 
+For testing purpose, hotels can be seed in Program.cs file in ApplicationStarted event; just commnet return line.
+
 ## Test
 Uniti test for Domain and Application layer.
 Integration test are planned :)

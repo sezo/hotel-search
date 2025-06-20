@@ -49,8 +49,27 @@ public class Program
 
         app.UseAuthorization();
 
-        app.MapControllers();
 
+        app.MapControllers();
+        
+        app.Lifetime.ApplicationStarted.Register(async () =>
+        {
+            
+            // comment return line to seed some hotels
+
+            return;
+            using var scope = app.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var hotelService = services.GetRequiredService<IHotelService>();
+
+            for (int i = 1; i < 11; i++)
+            {
+                var newHotel = new HotelUpsertCommand(null, $"Hotel {i}", 16 + i , 44.8 + i , 99 + i, null);
+                hotelService.Upsert(newHotel);
+            }
+
+        });
+        
         app.Run();
     }
 
