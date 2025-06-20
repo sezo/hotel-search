@@ -52,3 +52,6 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/source/.idea/.idea.HotelSearch/.idea/indexLayout.xml
+/source/.idea/.idea.HotelSearch/.idea/projectSettingsUpdater.xml
+/source/.idea/.idea.HotelSearch/.idea/workspace.xml
