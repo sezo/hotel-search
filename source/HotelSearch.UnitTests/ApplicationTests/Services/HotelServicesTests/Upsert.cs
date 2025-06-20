@@ -1,32 +1,14 @@
-using AutoFixture;
 using FluentAssertions;
-using HotelSearch.Application.Services;
 using HotelSearch.Domain.Commands;
 using HotelSearch.Domain.Entities;
 using HotelSearch.Domain.Exceptions;
-using HotelSearch.Domain.Repositories;
-using HotelSearch.Domain.Services;
-using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
 namespace HotelSearch.UnitTests.ApplicationTests.Services;
 
-class HotelServiceTests: BaseServiceTest<IHotelService>
+class Upsert: HotelServiceBaseTests
 {
-    private Mock<ILogger<HotelService>> _mockedLogger;
-    private Mock<IHotelRepository> _mockedHotelRepository;
-    private Hotel _hotel;
-    private Guid _hotelId;
-
-    [SetUp]
-    public void Setup()
-    {
-        InstantiateDependencies();
-        _hotel = Fixture.Create<Hotel>();
-        _hotelId = Guid.NewGuid();
-    }
-
     [Test]
     public void Upsert_CommandParameterIsNull_ThrowsArgumentNullException()
     {
@@ -54,10 +36,10 @@ class HotelServiceTests: BaseServiceTest<IHotelService>
     )
     {
         // Arrange
-        var upsertCommand = GetValidHotelUpsertCommand(_hotelId, name, longitude, latitude, price, discount);
-        _mockedHotelRepository
-            .Setup(x => x.Get(_hotelId))
-            .Returns(_hotel);
+        var upsertCommand = GetValidHotelUpsertCommand(HotelId, name, longitude, latitude, price, discount);
+        MockedHotelRepository
+            .Setup(x => x.Get(HotelId))
+            .Returns(Hotel);
         
         var service = GetService();
         var action = () => service.Upsert(upsertCommand);
@@ -70,13 +52,13 @@ class HotelServiceTests: BaseServiceTest<IHotelService>
     public void Upsert_RepositoryUpsertException_ThrowsHotelUpsertFailedException()
     {
         // Arrange
-        var upsertCommand = GetValidHotelUpsertCommand(_hotelId);
-        _mockedHotelRepository
-            .Setup(x => x.Get(_hotelId))
-            .Returns(_hotel);
+        var upsertCommand = GetValidHotelUpsertCommand(HotelId);
+        MockedHotelRepository
+            .Setup(x => x.Get(HotelId))
+            .Returns(Hotel);
         
-        _mockedHotelRepository
-            .Setup(x => x.Upsert(_hotel))
+        MockedHotelRepository
+            .Setup(x => x.Upsert(Hotel))
             .Throws<Exception>();
         
         var service = GetService();
@@ -90,9 +72,9 @@ class HotelServiceTests: BaseServiceTest<IHotelService>
     public void Upsert_HotelIdExistsInCommandButNotFoundInRepository_ThrowsHotelNotFoundException()
     {
         // Arrange
-        var upsertCommand = GetValidHotelUpsertCommand(_hotelId);
-        _mockedHotelRepository
-            .Setup(x => x.Get(_hotelId))
+        var upsertCommand = GetValidHotelUpsertCommand(HotelId);
+        MockedHotelRepository
+            .Setup(x => x.Get(HotelId))
             .Returns(() => null);
         
         var service = GetService();
@@ -106,12 +88,12 @@ class HotelServiceTests: BaseServiceTest<IHotelService>
     public void Upsert_UpdateCase_ShouldReturnSuccess()
     {
         // Arrange
-        _hotel.SetPrivateProperty(nameof(_hotel.Id), _hotelId);
-        var upsertCommand = GetValidHotelUpsertCommand(_hotelId);
+        Hotel.SetPrivateProperty(nameof(Hotel.Id), HotelId);
+        var upsertCommand = GetValidHotelUpsertCommand(HotelId);
         
-        _mockedHotelRepository
-            .Setup(x => x.Get(_hotelId))
-            .Returns(_hotel);
+        MockedHotelRepository
+            .Setup(x => x.Get(HotelId))
+            .Returns(Hotel);
         
         var service = GetService();
 
@@ -120,25 +102,25 @@ class HotelServiceTests: BaseServiceTest<IHotelService>
         
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.Should().Be(_hotelId);
-        _mockedHotelRepository.Verify(x => x.Get(It.Is<Guid>(id => id == _hotelId)), Times.Once);
+        result.Value.Should().Be(HotelId);
+        MockedHotelRepository.Verify(x => x.Get(It.Is<Guid>(id => id == HotelId)), Times.Once);
         
-        _mockedHotelRepository.Verify(x => x.Upsert(It.Is<Hotel>(h =>
-            h.Id == _hotelId && 
+        MockedHotelRepository.Verify(x => x.Upsert(It.Is<Hotel>(h =>
+            h.Id == HotelId && 
             h.Name == upsertCommand.Name && 
             h.Location.X == upsertCommand.Longitude &&
             h.Location.Y == upsertCommand.Latitude && 
             h.Price.RegularPrice == upsertCommand.Price && 
             h.Price.Discount == upsertCommand.Discount)), Times.Once);
         
-        _mockedHotelRepository.VerifyNoOtherCalls();
+        MockedHotelRepository.VerifyNoOtherCalls();
     }
     
     [Test(Description = "Repository should not be called to get hotel entity when id (in command object) is not present")]
     public void Upsert_InsertCase_ShouldReturnSuccess()
     {
         // Arrange
-        _hotel.SetPrivateProperty(nameof(_hotel.Id), _hotelId);
+        Hotel.SetPrivateProperty(nameof(Hotel.Id), HotelId);
         var upsertCommand = GetValidHotelUpsertCommand();
         
         var service = GetService();
@@ -148,7 +130,7 @@ class HotelServiceTests: BaseServiceTest<IHotelService>
         
         // Assert
         result.IsSuccess.Should().BeTrue();
-        _mockedHotelRepository.Verify(x => x.Upsert(It.Is<Hotel>(h =>
+        MockedHotelRepository.Verify(x => x.Upsert(It.Is<Hotel>(h =>
             h.Id == result.Value && 
             h.Name == upsertCommand.Name && 
             h.Location.X == upsertCommand.Longitude &&
@@ -156,17 +138,6 @@ class HotelServiceTests: BaseServiceTest<IHotelService>
             h.Price.RegularPrice == upsertCommand.Price && 
             h.Price.Discount == upsertCommand.Discount)), Times.Once);
         
-        _mockedHotelRepository.VerifyNoOtherCalls();
-    }
-
-    protected override void InstantiateDependencies()
-    {
-        _mockedHotelRepository = new Mock<IHotelRepository>();
-        _mockedLogger = new Mock<ILogger<HotelService>>();
-    }
-
-    protected override IHotelService GetService()
-    {
-        return new HotelService(_mockedHotelRepository.Object, _mockedLogger.Object);
+        MockedHotelRepository.VerifyNoOtherCalls();
     }
 }
