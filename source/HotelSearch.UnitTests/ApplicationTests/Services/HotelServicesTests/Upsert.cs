@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace HotelSearch.UnitTests.ApplicationTests.Services;
 
-class Upsert: HotelServiceBaseTests
+class Upsert: HotelServiceBaseTest
 {
     [Test]
     public void Upsert_CommandParameterIsNull_ThrowsArgumentNullException()

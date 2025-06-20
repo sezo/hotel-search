@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace HotelSearch.UnitTests.ApplicationTests.Services;
 
-class HotelServiceBaseTests: BaseServiceTest<IHotelService>
+class HotelServiceBaseTest: BaseServiceTest<IHotelService>
 {
     protected Mock<ILogger<HotelService>> MockedLogger;
     protected Mock<IHotelRepository> MockedHotelRepository;

@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace HotelSearch.UnitTests.ApplicationTests.Services;
 
-class Delete: HotelServiceBaseTests
+class Delete: HotelServiceBaseTest
 {
     [Test]
     public void Delete_CommandParameterIsNull_ThrowsArgumentNullException()
