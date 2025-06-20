@@ -15,11 +15,12 @@ public record HotelUpsertCommand: BaseCommand<Guid?>
     /// Discount applied to price used to calculate price per night.
     public int? Discount { get; init; }
 
-    public HotelUpsertCommand(Guid? id, double longitude, double latitude, decimal price, int? discount)
+    public HotelUpsertCommand(Guid? id, string name, double longitude, double latitude, decimal price, int? discount)
         : base(id)
     {
         Longitude = longitude;
         Latitude = latitude;
+        Name = name;
         Price = price;
         Discount = discount;
     }

@@ -22,6 +22,11 @@ public class Hotel: IdEntity<Guid>
     /// Hotel price per
     /// </summary>
     public HotelPrice Price { get; private set; }
+
+    public Hotel()
+    {
+        Id = Guid.NewGuid();
+    }
     
     
     public void Upsert(HotelUpsertCommand command)
