@@ -51,6 +51,21 @@ public class HotelService: IHotelService
 
     }
 
+    public HotelView Get(Guid id)
+    {
+        var hotel = GetHotel(id);
+        return new HotelView()
+        {
+            Name = hotel.Name,
+            Price = hotel.Price.PerNight
+        };
+    }
+
+    public List<HotelView> GetAll(int page = 0, int pageSize = 10)
+    {
+        return _hotelRepository.GetAll(page, pageSize);
+    }
+
     public List<HotelView> Search(HotelSearchQuery query)
     {
         if (query is null)

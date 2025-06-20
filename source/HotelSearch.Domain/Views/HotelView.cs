@@ -1,9 +1,8 @@
 namespace HotelSearch.Domain.Views;
 
-public class HotelView : BaseView<Guid>
+public class HotelView
 {
     public string Name { get; set; }
-    public double Longitude { get; set; }
-    public double Latitude { get; set; }
-    public decimal PricePerNight { get; set; }
+    public double? Distance { get; set; }
+    public decimal Price { get; set; }
 }

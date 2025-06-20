@@ -4,6 +4,8 @@ using HotelSearch.Domain.Queries;
 using HotelSearch.Domain.Repositories;
 using HotelSearch.Domain.Views;
 using NetTopologySuite.Geometries;
+using ProjNet.CoordinateSystems;
+using ProjNet.CoordinateSystems.Transformations;
 
 namespace HotelSearch.DataAccess.Repositories;
 
@@ -21,22 +23,29 @@ public class HotelRepository: IHotelRepository
         return hotel;
     }
     
-    public IEnumerable<Hotel> GetAll(int page = 1, int pageSize = 10)
+    public List<HotelView> GetAll(int page = 1, int pageSize = 10)
     {
-        page = page < 1 ? 1 : page;
+        page = page < 1 ? 0 : page - 1;
+        pageSize = pageSize < 1 || pageSize > 100 ? 10 : pageSize;
         
         return _hotels
             .Values
             .OrderBy(x => x.Name)
             .Skip(page * pageSize)
-            .Take(pageSize);
+            .Take(pageSize)
+            .Select(x => new HotelView()
+            {
+                Name = x.Name,
+                Price = x.Price.PerNight
+            })
+            .ToList();
     }
 
     public List<HotelView> Search(HotelSearchQuery query)
     {
-        var page = query.Page.GetValueOrDefault() < 1 ? 1 : query.Page.Value;
-        var pageSize = query.Page.GetValueOrDefault();
-        pageSize = pageSize < 1 || pageSize > 100 ? 100 : pageSize;
+        var page = query.Page.GetValueOrDefault() < 1 ? 0 : query.Page.Value - 1;
+        var pageSize = query.PageSize.GetValueOrDefault();
+        pageSize = pageSize < 1 || pageSize > 100 ? 10 : pageSize;
         
         return _hotels
             .Values
@@ -46,11 +55,9 @@ public class HotelRepository: IHotelRepository
             .Take(pageSize)
             .Select(x => new HotelView
             {
-                Id = x.Id,
                 Name = x.Name,
-                Latitude = x.Location.X,
-                Longitude = x.Location.Y,
-                PricePerNight = x.Price.PerNight
+                Distance = DistanceInMeters( x.Location, new Point(query.Longitude, query.Latitude)),
+                Price = x.Price.PerNight
             })
             .ToList();
     }
@@ -58,5 +65,25 @@ public class HotelRepository: IHotelRepository
     public void Upsert(Hotel hotel)
     {
         _hotels[hotel.Id] = hotel;
+    }
+    
+    private double DistanceInMeters(Point point1, Point point2)
+    {
+        // Set up coordinate systems
+        var wgs84 = GeographicCoordinateSystem.WGS84;
+        var webMercator = ProjectedCoordinateSystem.WebMercator;
+
+        // Create a transformer
+        var transform = new CoordinateTransformationFactory()
+            .CreateFromCoordinateSystems(wgs84, webMercator);
+
+        // Transform both points to meters
+        var coord1 = transform.MathTransform.Transform(new[] { point1.X, point1.Y });
+        var coord2 = transform.MathTransform.Transform(new[] { point2.X, point2.Y });
+
+        var p1 = new Point(coord1[0], coord1[1]);
+        var p2 = new Point(coord2[0], coord2[1]);
+
+        return p1.Distance(p2); 
     }
 }

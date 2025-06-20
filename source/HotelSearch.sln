@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04_Infrastructure", "04_Inf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelSearch.DataAccess", "HotelSearch.DataAccess\HotelSearch.DataAccess.csproj", "{A0CE9BF1-CF38-4449-813D-977F84B84FA6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05_WebServices", "05_WebServices", "{8AC696BC-D96B-4800-A936-186491CCE466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelSearch.WebApi", "HotelSearch.WebApi\HotelSearch.WebApi.csproj", "{2F59E743-BF13-4045-BA27-46BA37567520}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,7 @@ Global
 		{443CF0C9-9637-4674-9BCB-DC1A271A255B} = {B6964417-0662-4CAB-8C34-01C46BF7D1E4}
 		{2F2B2F5B-A571-49DC-AF65-194859D31263} = {F4981250-B89A-4D75-9099-D5C088D6FBA2}
 		{A0CE9BF1-CF38-4449-813D-977F84B84FA6} = {F65016B7-C7A5-438F-8ABE-77802A90EC4B}
+		{2F59E743-BF13-4045-BA27-46BA37567520} = {8AC696BC-D96B-4800-A936-186491CCE466}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4EA7367F-FDAC-464C-B8B2-EFDBAC15F93C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +49,9 @@ Global
 		{A0CE9BF1-CF38-4449-813D-977F84B84FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0CE9BF1-CF38-4449-813D-977F84B84FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0CE9BF1-CF38-4449-813D-977F84B84FA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F59E743-BF13-4045-BA27-46BA37567520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F59E743-BF13-4045-BA27-46BA37567520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F59E743-BF13-4045-BA27-46BA37567520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F59E743-BF13-4045-BA27-46BA37567520}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

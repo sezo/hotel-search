@@ -20,7 +20,7 @@ public interface IHotelRepository
     /// <returns></returns>
     Hotel Get(Guid id);
     
-    IEnumerable<Hotel> GetAll(int page = 0, int pageSize = 10);
+    List<HotelView> GetAll(int page = 0, int pageSize = 10);
     
     List<HotelView> Search(HotelSearchQuery query);
     
