@@ -28,7 +28,7 @@ internal class HotelUpsertCommandValidator: AbstractValidator<HotelUpsertCommand
             .WithMessage("Name cannot be empty.")
             .Length(5,100)
             .WithMessage("Name must be between 5 and 100 characters long.")
-            .Matches(@"^[a-zA-Z0-9_\-\.]+$")
+            .Matches(@"^[\p{L}0-9 ]+$")
             .WithMessage("Name must contain only alphanumeric characters and spaces.");
         
         RuleFor(x => x.Price)
