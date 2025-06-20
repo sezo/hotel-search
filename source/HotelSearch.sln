@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Domain", "01_Domain", "{2AF00555-135C-4384-AAEE-BEE313392A23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelSearch.Domain", "HotelSearch.Domain\HotelSearch.Domain.csproj", "{4EA7367F-FDAC-464C-B8B2-EFDBAC15F93C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_Application", "02_Application", "{B6964417-0662-4CAB-8C34-01C46BF7D1E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelSearch.Application", "HotelSearch.Application\HotelSearch.Application.csproj", "{443CF0C9-9637-4674-9BCB-DC1A271A255B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10_Tests", "10_Tests", "{F4981250-B89A-4D75-9099-D5C088D6FBA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelSearch.UnitTests", "HotelSearch.UnitTests\HotelSearch.UnitTests.csproj", "{2F2B2F5B-A571-49DC-AF65-194859D31263}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EA7367F-FDAC-464C-B8B2-EFDBAC15F93C} = {2AF00555-135C-4384-AAEE-BEE313392A23}
+		{443CF0C9-9637-4674-9BCB-DC1A271A255B} = {B6964417-0662-4CAB-8C34-01C46BF7D1E4}
+		{2F2B2F5B-A571-49DC-AF65-194859D31263} = {F4981250-B89A-4D75-9099-D5C088D6FBA2}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EA7367F-FDAC-464C-B8B2-EFDBAC15F93C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EA7367F-FDAC-464C-B8B2-EFDBAC15F93C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EA7367F-FDAC-464C-B8B2-EFDBAC15F93C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EA7367F-FDAC-464C-B8B2-EFDBAC15F93C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443CF0C9-9637-4674-9BCB-DC1A271A255B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443CF0C9-9637-4674-9BCB-DC1A271A255B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443CF0C9-9637-4674-9BCB-DC1A271A255B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443CF0C9-9637-4674-9BCB-DC1A271A255B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F2B2F5B-A571-49DC-AF65-194859D31263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F2B2F5B-A571-49DC-AF65-194859D31263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F2B2F5B-A571-49DC-AF65-194859D31263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F2B2F5B-A571-49DC-AF65-194859D31263}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
