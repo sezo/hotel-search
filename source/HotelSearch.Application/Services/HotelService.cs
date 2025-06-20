@@ -2,9 +2,11 @@ using HotelSearch.Domain;
 using HotelSearch.Domain.Commands;
 using HotelSearch.Domain.Entities;
 using HotelSearch.Domain.Exceptions;
+using HotelSearch.Domain.Queries;
 using HotelSearch.Domain.Repositories;
 using HotelSearch.Domain.Services;
 using HotelSearch.Domain.Validators;
+using HotelSearch.Domain.Views;
 using Microsoft.Extensions.Logging;
 
 namespace HotelSearch.Application.Services;
@@ -47,6 +49,26 @@ public class HotelService: IHotelService
             throw new HotelDeletionFailException(command.Id);
         }
 
+    }
+
+    public List<HotelView> Search(HotelSearchQuery query)
+    {
+        if (query is null)
+        {
+            _logger.LogError("Search query is null");
+            throw new ArgumentNullException();
+        }
+
+        try
+        {
+            var result = _hotelRepository.Search(query);
+            return result;
+        }
+        catch (Exception ex)
+        {
+           _logger.LogError(ex, "Search query exception");
+            throw;
+        }
     }
 
     public OperationResult<Guid> Upsert(HotelUpsertCommand command)

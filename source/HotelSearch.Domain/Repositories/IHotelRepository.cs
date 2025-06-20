@@ -1,4 +1,6 @@
 using HotelSearch.Domain.Entities;
+using HotelSearch.Domain.Queries;
+using HotelSearch.Domain.Views;
 
 namespace HotelSearch.Domain.Repositories;
 
@@ -19,6 +21,8 @@ public interface IHotelRepository
     Hotel Get(Guid id);
     
     IEnumerable<Hotel> GetAll(int page = 0, int pageSize = 10);
+    
+    List<HotelView> Search(HotelSearchQuery query);
     
     void Upsert(Hotel hotel);
 }

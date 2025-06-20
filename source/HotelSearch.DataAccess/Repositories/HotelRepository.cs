@@ -1,6 +1,9 @@
 using System.Collections.Concurrent;
 using HotelSearch.Domain.Entities;
+using HotelSearch.Domain.Queries;
 using HotelSearch.Domain.Repositories;
+using HotelSearch.Domain.Views;
+using NetTopologySuite.Geometries;
 
 namespace HotelSearch.DataAccess.Repositories;
 
@@ -27,6 +30,29 @@ public class HotelRepository: IHotelRepository
             .OrderBy(x => x.Name)
             .Skip(page * pageSize)
             .Take(pageSize);
+    }
+
+    public List<HotelView> Search(HotelSearchQuery query)
+    {
+        var page = query.Page.GetValueOrDefault() < 1 ? 1 : query.Page.Value;
+        var pageSize = query.Page.GetValueOrDefault();
+        pageSize = pageSize < 1 || pageSize > 100 ? 100 : pageSize;
+        
+        return _hotels
+            .Values
+            .OrderBy(x => x.Price.PerNight)
+            .ThenBy(x => x.Location.Distance(new Point(query.Longitude, query.Latitude)))
+            .Skip(page * pageSize)
+            .Take(pageSize)
+            .Select(x => new HotelView
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Latitude = x.Location.X,
+                Longitude = x.Location.Y,
+                PricePerNight = x.Price.PerNight
+            })
+            .ToList();
     }
 
     public void Upsert(Hotel hotel)

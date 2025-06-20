@@ -10,4 +10,8 @@
       <ProjectReference Include="..\HotelSearch.Domain\HotelSearch.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="NetTopologySuite" Version="2.6.0" />
+    </ItemGroup>
+
 </Project>

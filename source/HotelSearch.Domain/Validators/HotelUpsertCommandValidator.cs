@@ -16,12 +16,10 @@ internal class HotelUpsertCommandValidator: AbstractValidator<HotelUpsertCommand
             .WithMessage("Discount must be a value between 1 and 100.");
         
         RuleFor(x => x.Latitude)
-            .InclusiveBetween(-90, 90)
-            .WithMessage("Latitude must be between -90 and 90 degrees.");
+            .SetValidator(new LatitudeValidator());
 
         RuleFor(x => x.Longitude)
-            .InclusiveBetween(-180, 180)
-            .WithMessage("Longitude must be between -180 and 180 degrees.");
+            .SetValidator(new LongitudeValidator());
         
         RuleFor(x => x.Name)
             .NotEmpty()
