@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using AutoFixture;
 using HotelSearch.Domain.Commands;
 
 namespace HotelSearch.UnitTests;
 
+[ExcludeFromCodeCoverage]
 internal class BaseTest
 {
     public readonly Fixture Fixture;

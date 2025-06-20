@@ -38,7 +38,7 @@ public class Hotel: IdEntity<Guid>
             throw new ValidationFailedException("Hotel validation failed.", validationResult);
         }
         
-        Location = new Point(command.Longitude, command.Latitude);
+        Location = new Point(command.Longitude, command.Latitude){ SRID = 4326 };
         Name = command.Name;
         Price = new HotelPrice(command.Price, command.Discount);
         
