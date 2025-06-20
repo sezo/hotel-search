@@ -4,6 +4,7 @@ using HotelSearch.Domain.Entities;
 using HotelSearch.Domain.Exceptions;
 using HotelSearch.Domain.Repositories;
 using HotelSearch.Domain.Services;
+using HotelSearch.Domain.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace HotelSearch.Application.Services;
@@ -17,7 +18,37 @@ public class HotelService: IHotelService
         _hotelRepository = hotelRepository;
         _logger = logger;
     }
-    
+
+    public OperationResult<Guid> Delete(HotelDeleteCommand command)
+    {
+        if (command is null)
+        {
+            _logger.LogError("Upsert command is null");
+            throw new ArgumentNullException();
+        }
+        
+        var validationResult = new HotelDeleteCommandValidator().Validate(command);
+
+        if (!validationResult.IsValid)
+        {
+            _logger.LogError("Upsert command validation failed with errors {ValidationErrors}", validationResult.Errors);
+            throw new ValidationFailedException("Hotel pre deletion validation failed.", validationResult);
+        }
+
+        try
+        {
+            _hotelRepository.Delete(command.Id);
+            _logger.LogInformation("Hotel with id {Id} deleted", command.Id);
+            return OperationResult<Guid>.Success(command.Id);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Hotel deletion with id {Id} fails", command.Id);
+            throw new HotelDeletionFailException(command.Id);
+        }
+
+    }
+
     public OperationResult<Guid> Upsert(HotelUpsertCommand command)
     {
         if (command is null)
@@ -32,8 +63,13 @@ public class HotelService: IHotelService
         {
             _hotelRepository.Upsert(hotel);
             _logger.LogInformation("Hotel {Name} with id {Id} upserted", hotel.Name, hotel.Id);
-        
+
             return OperationResult<Guid>.Success(hotel.Id);
+        }
+        catch (ValidationFailedException ex)
+        {
+            _logger.LogError(ex,"Hotel upsert validation failed");
+            throw;
         }
         catch (Exception ex)
         {
