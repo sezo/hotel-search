@@ -25,7 +25,7 @@ public class HotelService: IHotelService
     {
         if (command is null)
         {
-            _logger.LogError("Upsert command is null");
+            _logger.LogError("Delete command is null");
             throw new ArgumentNullException();
         }
         

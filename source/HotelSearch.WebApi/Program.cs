@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using HotelSearch.Application.Services;
 using HotelSearch.DataAccess.Repositories;
+using HotelSearch.Domain.Commands;
 using HotelSearch.Domain.Repositories;
 using HotelSearch.Domain.Services;
 using HotelSearch.WebApi.Middlewares;
@@ -48,8 +49,8 @@ public class Program
 
         app.UseAuthorization();
 
-
         app.MapControllers();
+
         app.Run();
     }
 
