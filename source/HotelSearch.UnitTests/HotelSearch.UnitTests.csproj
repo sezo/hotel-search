@@ -12,11 +12,13 @@
       <PackageReference Include="AutoFixture.NUnit4" Version="5.0.0-preview0011" />
       <PackageReference Include="FluentAssertions" Version="8.3.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+      <PackageReference Include="Moq" Version="4.20.72" />
       <PackageReference Include="NUnit" Version="4.3.2" />
       <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\HotelSearch.Application\HotelSearch.Application.csproj" />
       <ProjectReference Include="..\HotelSearch.Domain\HotelSearch.Domain.csproj" />
     </ItemGroup>
 
