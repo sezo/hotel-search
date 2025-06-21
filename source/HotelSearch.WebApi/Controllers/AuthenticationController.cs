@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace HotelSearch.WebApi.Controllers;
 
@@ -22,6 +23,7 @@ public class AuthenticationController: ControllerBase
     
     [AllowAnonymous]
     [HttpPost("login")]
+    [SwaggerOperation(Summary = "Mocked for this demo, you can pass any string for username/password")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
 

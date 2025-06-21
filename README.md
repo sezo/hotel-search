@@ -19,6 +19,13 @@ Entry point to application. Api's are exposed on Hotels url.
 For all CRUD actions user needs to be authenticated.
 Search method is allowed for anonymus user.
 
+#### Api access
+Search api endpoint is available without authentication.<br /> 
+For Upsert/Delete endpoint, user needs to be authenticated. <br> 
+Access token can be obtained via Login method; for usernem/passord you can use any string.
+There is a Swagger interface exposed on app_url/swagger/index.html.
+
+#### Seed init hotels
 For testing purpose, hotels can be seed in Program.cs file in ApplicationStarted event; just comment `return` line so seed routine is kicked.
 
 ## Test
